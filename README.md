@@ -3,7 +3,7 @@
 ## Italian [(English below)](#english)
 Scraper per la mappa del [BikeMi](https://www.bikemi.com/it/mappa-stazioni.aspx) fatta in Python3.
 
-Il modulo *BikeMi.py* estrae:
+Il modulo *bikemi.py* estrae:
 1. Statistiche globali sul servizio:
   1. Statistiche sulle bici:
     1. Stalli liberi
@@ -65,7 +65,7 @@ Il progetto è completamente indipendente da BikeMi.
 ## English
 Scraper for [BikeMi](https://www.bikemi.com/it/mappa-stazioni.aspx) map. Made in Python3.
 
-*BikeMy.pi* module extracts:
+*bikemi.py* module extracts:
 1. Global statistics on the service
   1. Bikes statistics:
       1. Free racks
