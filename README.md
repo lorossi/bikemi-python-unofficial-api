@@ -26,15 +26,16 @@ Il modulo *BikeMi.py* estrae:
   2. ID della stazione
   3. Coordinate della stazione
   4. Numero di bici nella stazione, a sua volta diviso in:
-      1. Stalli liberi
-      2. Bici disponibili
-      3. Bici elettriche disponibili
-      4. Bici elettriche con seggiolino disponibili
-  5. Se la stazione è piena
-  6. Se la stazione è vuota
-  7. Se la stazione *potrebbe* essere piena
-  8. Se la stazione *potrebbe* può essere vuota
-  9. Il nome dell'icona che il sito mostra sulla mappa e il suo URL
+    1. Stalli liberi
+    2. Bici disponibili
+    3. Bici elettriche disponibili
+    4. Bici elettriche con seggiolino disponibili
+  5. Lo status della stazione:
+    1. Se la stazione è piena
+    2. Se la stazione è vuota
+    3. Se la stazione *potrebbe* essere piena
+    4. Se la stazione *potrebbe* può essere vuota
+  6. Il nome dell'icona che il sito mostra sulla mappa e il suo URL
 
 I dati vengono restituiti tramite dizionario e possono essere salvati su file in formato JSON.
 
@@ -87,15 +88,16 @@ Scraper for [BikeMi](https://www.bikemi.com/it/mappa-stazioni.aspx) map. Made in
   2. Station ID
   3. Station coordinates
   4. Number of bikes available, divided in
-      1. Free racks
-      2. Available bikes
-      3. Available electric bikes
-      4. Available electric bikes with child seat
-  5. If the station is empty
-  6. If the station is full
-  7. If the station *might* be empty
-  8. If the station *might* be full
-  9. Name and URL of the icon used on the map
+    1. Free racks
+    2. Available bikes
+    3. Available electric bikes
+    4. Available electric bikes with child seat
+  5. Station status:
+    1. If the station is empty
+    2. If the station is full
+    3. If the station *might* be empty
+    4. If the station *might* be full
+  6. Name and URL of the icon used on the map
 
 All the data is provided in a dict and can be saved into a JSON file.
 
