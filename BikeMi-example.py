@@ -37,5 +37,27 @@ for station in bikes["stations"]:
     string += f"{tab}Icon used: {station['icon']['name']}{newl}"
     print(string)
 
+# find closest station to coordinates
+lat = 45.4692247
+lon = 9.1797775
+closest, distance = b.findClosest(lat, lon)
+string = ""
+string += f"Closest station to lat {lat}°N lon {lon}°E, {distance}km away:{newl}"
+string += f"Station {closest['name']}, ID: {closest['ID']}, in coords {closest['coordinates']['lat']}°N, {closest['coordinates']['lon']}°E {newl}"
+string += f"{tab}Bikes: {closest['bikes']['bikes']}{newl}"
+string += f"{tab}Electric bikes: {closest['bikes']['electric_bikes']}{newl}"
+string += f"{tab}Electric bikes with child seat: {closest['bikes']['electric_bikes_child_seat']}{newl}"
+string += f"{tab}Free racks: {closest['bikes']['bike_racks']}{newl}"
+if closest["status"]["full"]:
+    string += f"{tab}The station is full.{newl}"
+elif closest["status"]["empty"]:
+    string += f"{tab}The station is empty.{newl}"
+elif closest["status"]["probably_full"]:
+    string += f"{tab}The station is probably empty.{newl}"
+elif closest["status"]["probably_empty"]:
+    string += f"{tab}The station is probably empty.{newl}"
+
+print(string)
+
 # save data to json file
 b.saveToFile("BikeMi.json")
