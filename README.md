@@ -1,4 +1,4 @@
-# BikeMi-Python-Unofficial-Api
+# BikeMi-Python-Unofficial-API
 
 ## Italian (English below)
 Scraper per la mappa del [BikeMi](https://www.bikemi.com/it/mappa-stazioni.aspx) fatta in Python3.
