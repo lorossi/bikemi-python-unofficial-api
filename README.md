@@ -50,10 +50,10 @@ Lo script quindi indica se la stazione è *probabilmente vuota* o *probabilmente
 [Mappa BikeMi](https://www.bikemi.com/it/mappa-stazioni.aspx)
 
 ### Codice di esempio
-
     import bikemi
     b = bikemi.BikeMi()
     bikes = b.getBikes()
+    closest = b.findClosest()
     b.save("bikemi.json")
 
 Un esempio più completo di codice è disponibile nello script *(BikeMi-example.py)*.
@@ -113,10 +113,10 @@ This script acknowledges this and tells you if the bike station is *probably ful
 
 
 ### Code example
-
     import bikemi
     b = bikemi.BikeMi()
     bikes = b.getBikes()
+    closest = b.findClosest()
     b.save("bikemi.json")
 
 A more complete example can be found inside the repo *(BikeMi-example.py)*.
