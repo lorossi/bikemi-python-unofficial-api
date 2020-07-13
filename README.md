@@ -22,8 +22,8 @@ I dati vengono restituiti tramite dizionario e possono essere salvati su file in
 Nella repo viene anche fornito uno script *(BikeMi-example.py)* che mostra un uso di esempio.
 
 ### Stazione probabilmente piena / vuota
-Ho provato, per esperienza diretta mia, che le biciclette rotte non sono conteggiate dal sistema. Per questo, anche se la stazione mostra bici o stalli disponibili, ciò potrebbe non rispecchiare la realtà.
-Per questo, il modulo indica se la stazione è *probabilmente vuota* o *probabilmente piena*. Il conteggio è arbitrario ed è basato sulla mia esperienza di utente BikeMi.
+Ho provato, per esperienza mia diretta che le biciclette rotte non sono conteggiate dal sistema. Per questo, anche se la stazione mostra bici o stalli disponibili, ciò potrebbe non rispecchiare la realtà.
+Lo script quindi indica se la stazione è *probabilmente vuota* o *probabilmente piena*. Il conteggio è arbitrario ed è basato sulla mia esperienza di utente BikeMi.
 
 ### Link ufficiali
 [Sito BikeMi](https://www.bikemi.com/)
@@ -65,7 +65,7 @@ Inside this repo you will find a file called *(BikeMi-example.py)* that shows a 
 
 ### Probably empty/full station
 By experience, I discovered that broken bycicles are not counted by the system. Because of this, even if the station shows free racks or available bikes, it might not be true.
-This module akwnoledges this and tells you if the bike station is *probably full* or *probably empty*. This stat is purerly arbitrary and it is based on my experience as a BikeMi user.
+This script acknowledges this and tells you if the bike station is *probably full* or *probably empty*. This stat is purerly arbitrary and it is based on my experience as a BikeMi user.
 
 ### Official links
 [Bikemi website](https://www.bikemi.com/)
