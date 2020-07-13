@@ -56,7 +56,6 @@ elif closest["status"]["probably_full"]:
     string += f"{tab}The station is probably empty.{newl}"
 elif closest["status"]["probably_empty"]:
     string += f"{tab}The station is probably empty.{newl}"
-
 print(string)
 
 # save data to json file
