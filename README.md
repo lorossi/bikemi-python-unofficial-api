@@ -9,10 +9,10 @@ Il modulo *BikeMi.py* estrae:
   1. Nome e ID della stazione
   2. Coordinate della stazione
   3. Numero di bici nella stazione, a sua volta diviso in:
-    1. Stalli liberi
-    2. Bici disponibili
-    3. Bici elettriche disponibili
-    4. Bici elettriche con seggiolino disponibili
+      1. Stalli liberi 
+      2. Bici disponibili
+      3. Bici elettriche disponibili
+      4. Bici elettriche con seggiolino disponibili
   4. Se la stazione può essere vuota
   5. Se la stazione può essere piena
   6. L'icona che il sito mostra sulla mappa
@@ -51,10 +51,10 @@ Scraper for [BikeMi](https://www.bikemi.com/it/mappa-stazioni.aspx) map. Made in
   1. Station name and ID
   2. Station coordinates
   3. Number of bikes in the station, divided in:
-    1. Free racks
-    2. Available bikes
-    3. Available electric bikes
-    4. Available electric bikes with child seat
+      1. Free racks
+      2. Available bikes
+      3. Available electric bikes
+      4. Available electric bikes with child seat
   4. If the station might be empty
   5. If the station might be full
   6. The icon of the station in the official map
