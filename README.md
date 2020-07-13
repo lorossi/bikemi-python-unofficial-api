@@ -6,11 +6,11 @@ Scraper per la mappa del [BikeMi](https://www.bikemi.com/it/mappa-stazioni.aspx)
 Il modulo *bikemi.py* estrae:
 1. Statistiche globali sul servizio:
   1. Statistiche sulle bici:
-    1. Stalli liberi
-    2. Bici disponibili
-    3. Bici elettriche disponibili
-    4. Bici elettriche con seggiolino disponibili
-    5. Numero totale di bici disponibili
+     1. Stalli liberi
+     2. Bici disponibili
+     3. Bici elettriche disponibili
+     4. Bici elettriche con seggiolino disponibili
+     5. Numero totale di bici disponibili
   2. Statistiche sulle stazioni:
       1. Stazioni piene
       2. Stazioni vuote
