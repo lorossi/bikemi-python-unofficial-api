@@ -26,7 +26,7 @@ Ho provato, per esperienza mia diretta che le biciclette rotte non sono conteggi
 Lo script quindi indica se la stazione è *probabilmente vuota* o *probabilmente piena*. Il conteggio è arbitrario ed è basato sulla mia esperienza di utente BikeMi.
 
 ### Link ufficiali
-[Sito BikeMi](https://www.bikemi.com/)
+[Sito BikeMi](https://www.bikemi.com/)  
 [Mappa BikeMi](https://www.bikemi.com/it/mappa-stazioni.aspx)
 
 ### Codice di esempio
@@ -68,7 +68,7 @@ By experience, I discovered that broken bycicles are not counted by the system. 
 This script acknowledges this and tells you if the bike station is *probably full* or *probably empty*. This stat is purerly arbitrary and it is based on my experience as a BikeMi user.
 
 ### Official links
-[Bikemi website](https://www.bikemi.com/)
+[Bikemi website](https://www.bikemi.com/)  
 [BikeMi map](https://www.bikemi.com/it/mappa-stazioni.aspx)
 
 
