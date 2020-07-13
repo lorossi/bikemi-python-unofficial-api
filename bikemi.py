@@ -96,7 +96,19 @@ class BikeMi:
                 break
 
         map = html[start:end]
-        bikes_stats = {}
+        bikes_stats = {
+            "bike_racks": 0,
+            "bikes": 0,
+            "electric_bikes": 0,
+            "electric_bikes_child_seat": 0
+        }
+        stations_stats = {
+            "full": 0,
+            "empty": 0,
+            "probably_full": 0,
+            "probably_empty": 0
+        }
+        icons_stats = {}
 
         for line in map:
             # each station is exactly one line long inside the map
@@ -105,6 +117,8 @@ class BikeMi:
             m = line.split(",")
             # each of these elements is comma separated
             icon = m[0].split("'")[1] # url is in quotes
+            icon_url = "https://www.bikemi.com" + icon
+            icon_name = icon.split("/")[-1].split("_icon")[0]
             lat = float(m[1])
             lon = float(m[2])
             name = m[3].replace("'", "").strip() #lots of unnecessary quotes
@@ -124,12 +138,7 @@ class BikeMi:
                 # parse the found number
                 number = int(table[element["position"]][start:end])
                 bikes[element["name"]] = number
-
-                # add this data to the global stats dict
-                if element["name"] in bikes_stats:
-                    bikes_stats[element["name"]] += number
-                else:
-                    bikes_stats[element["name"]] = number
+                bikes_stats[element["name"]] += number
 
                 # calculate the number of bikes inside a station
                 if "racks" not in element["name"]:
@@ -150,13 +159,38 @@ class BikeMi:
             except:
                 id = id_container[start:end]
 
-            # sometimes the number of registered bikes is wrong because
-            #   their system doesn't take track of broken bikes
-            #   so we want to show if, according to my calculations,
-            #   the bike rack moght be full or empy
-            probably_empty = (total <= self.probability_threshold)
-            probably_full = (total >= (bikes_stats["bike_racks"] - self.probability_threshold))
+            # check if the station is full (there are no more free spaces)
+            #   or empty (there are no more bikes)
+            full = (bikes_stats["bike_racks"] == 0)
+            empty = (total == 0)
 
+            if not (full or empty):
+                # sometimes the number of registered bikes is wrong because
+                #   their system doesn't take track of broken bikes
+                #   so we want to show if, according to my calculations,
+                #   the bike rack moght be full or empty
+                probably_full = (bikes_stats["bike_racks"] <= self.probability_threshold)
+                probably_empty = (total <= self.probability_threshold)
+            else:
+                probably_full = False
+                probably_empty = False
+
+
+            if full:
+                stations_stats["full"] += 1
+            elif empty:
+                stations_stats["empty"] += 1
+            elif probably_full:
+                stations_stats["probably_full"] += 1
+            elif probably_empty:
+                stations_stats["probably_empty"] += 1
+
+            if icon_name in icons_stats:
+                icons_stats[icon_name]["total"] += 1
+            else:
+                icons_stats[icon_name] = {}
+                icons_stats[icon_name]["total"] = 1
+                icons_stats[icon_name]["url"] = icon_url
 
             # create a new dict
             new_station = {
@@ -167,15 +201,22 @@ class BikeMi:
                     "lon": lon
                 },
                 "bikes" : bikes,
-                "probably_empty": probably_empty,
-                "probably_full": probably_full,
-                "icon": icon,
+                "status": {
+                    "full": full,
+                    "empty": empty,
+                    "probably_full": probably_full,
+                    "probably_empty": probably_empty
+                },
+                "icon": {
+                    "url": icon_url,
+                    "name": icon_name
+                },
             }
             # append the new dict to the lsit
             self.bikemi["stations"].append(new_station)
 
         # add some stats
-        self.bikemi["global_stats"] = bikes_stats
+        self.bikemi["global_stats"]["bikes"] = bikes_stats
         total = 0
 
         # calculate total number of bikes
@@ -184,12 +225,17 @@ class BikeMi:
                 total += bikes_stats[b]
 
         # add this stat
-        self.bikemi["global_stats"]["total_bikes"] = total
-        self.bikemi["global_stats"]["total_stations"] = len(map)
+        self.bikemi["global_stats"]["bikes"]["total_bikes"] = total
+
+        self.bikemi["global_stats"]["stations"] = stations_stats
+        self.bikemi["global_stats"]["stations"]["total_stations"] = len(map)
+
+        self.bikemi["global_stats"]["icons"] = icons_stats
+
         return self.bikemi
 
 
     # save self.bikemi to file
-    def saveToFile(self, path="BikeMi.json"):
+    def saveToFile(self, path="BikeMi.json", indent=4):
         with open(path, 'w') as json_file:
-            json.dump(self.bikemi, json_file)
+            json.dump(self.bikemi, json_file, indent=indent)
