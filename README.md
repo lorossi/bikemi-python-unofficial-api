@@ -12,29 +12,29 @@ Il modulo *BikeMi.py* estrae:
     4. Bici elettriche con seggiolino disponibili
     5. Numero totale di bici disponibili
   2. Statistiche sulle stazioni:
-    1. Stazioni piene
-    2. Stazioni vuote
-    3. Stazioni *probabilmente* piene
-    4. Stazioni *probabilmente* piene
-    5. Numero totale di stazioni
+      1. Stazioni piene
+      2. Stazioni vuote
+      3. Stazioni *probabilmente* piene
+      4. Stazioni *probabilmente* piene
+      5. Numero totale di stazioni
   3. Statistiche sulle icone usate:
-    1. Nome dell'icona
-    2. Numero di volte che è stata usata
-    3. URL dell'icona
+      1. Nome dell'icona
+      2. Numero di volte che è stata usata
+      3. URL dell'icona
 2. Statistiche per ogni stazione:
-  1. Nome della stazione
-  2. ID della stazione
-  3. Coordinate della stazione
-  4. Numero di bici nella stazione, a sua volta diviso in:
-    1. Stalli liberi
-    2. Bici disponibili
-    3. Bici elettriche disponibili
-    4. Bici elettriche con seggiolino disponibili
+    1. Nome della stazione
+    2. ID della stazione
+    3. Coordinate della stazione
+    4. Numero di bici nella stazione, a sua volta diviso in:
+        1. Stalli liberi
+        2. Bici disponibili
+        3. Bici elettriche disponibili
+        4. Bici elettriche con seggiolino disponibili
   5. Lo status della stazione:
-    1. Se la stazione è piena
-    2. Se la stazione è vuota
-    3. Se la stazione *potrebbe* essere piena
-    4. Se la stazione *potrebbe* può essere vuota
+      1. Se la stazione è piena
+      2. Se la stazione è vuota
+      3. Se la stazione *potrebbe* essere piena
+      4. Se la stazione *potrebbe* può essere vuota
   6. Il nome dell'icona che il sito mostra sulla mappa e il suo URL
 
 I dati vengono restituiti tramite dizionario e possono essere salvati su file in formato JSON.
@@ -68,35 +68,35 @@ Scraper for [BikeMi](https://www.bikemi.com/it/mappa-stazioni.aspx) map. Made in
 *BikeMy.pi* module extracts:
 1. Global statistics on the service
   1. Bikes statistics:
-    1. Free racks
-    2. Available bikes
-    3. Available electric bikes
-    4. Available electric bikes with child seat
-    5. Total number of available bikes
+      1. Free racks
+      2. Available bikes
+      3. Available electric bikes
+      4. Available electric bikes with child seat
+      5. Total number of available bikes
   2. Stations statistics:
-    1. Empty stations
-    2. Full stations
-    3. Stations that *might* be empty
-    4. Stations that *might* be full
-    5. Total number of stations
+      1. Empty stations
+      2. Full stations
+      3. Stations that *might* be empty
+      4. Stations that *might* be full
+      5. Total number of stations
   3. Icons statistics:
-    1. Icon name
-    2. Number of time it has been used
-    3. Icon URL
+      1. Icon name
+      2. Number of time it has been used
+      3. Icon URL
 2. Data for each station
-  1. Station name
-  2. Station ID
-  3. Station coordinates
-  4. Number of bikes available, divided in
-    1. Free racks
-    2. Available bikes
-    3. Available electric bikes
-    4. Available electric bikes with child seat
+    1. Station name
+    2. Station ID
+    3. Station coordinates
+    4. Number of bikes available, divided in
+        1. Free racks
+        2. Available bikes
+        3. Available electric bikes
+        4. Available electric bikes with child seat
   5. Station status:
-    1. If the station is empty
-    2. If the station is full
-    3. If the station *might* be empty
-    4. If the station *might* be full
+      1. If the station is empty
+      2. If the station is full
+      3. If the station *might* be empty
+      4. If the station *might* be full
   6. Name and URL of the icon used on the map
 
 All the data is provided in a dict and can be saved into a JSON file.
