@@ -106,8 +106,8 @@ By experience, I discovered that broken bycicles are not counted by the system. 
 This script acknowledges this and tells you if the bike station is *probably full* or *probably empty*. This stat is purerly arbitrary and it is based on my experience as a BikeMi user.
 
 ### Official links
-[Bikemi website](https://www.bikemi.com/)  
-[BikeMi map](https://www.bikemi.com/it/mappa-stazioni.aspx)
+[Bikemi website](https://www.bikemi.com/en/homepage.aspx)  
+[BikeMi map](https://www.bikemi.com/en/stations-map.aspx)
 
 
 ### Code example
