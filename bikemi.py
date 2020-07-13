@@ -2,6 +2,7 @@ import requests
 import datetime
 import json
 import time
+from math import sin, cos, sqrt, atan2, radians
 
 # BikeMi api - scraper for BikeMi website
 class BikeMi:
@@ -247,3 +248,32 @@ class BikeMi:
     def saveToFile(self, path="BikeMi.json", indent=4):
         with open(path, 'w') as json_file:
             json.dump(self.bikemi, json_file, indent=indent)
+
+
+    # find closest station to user specified coordinates
+    def findClosest(self, lat, lon):
+        if not self.bikemi["stations"]:
+            return None
+
+        R = 6373.0 # earth radius
+        closest = R # max distance (hopefully)
+        closest_station = {}
+        lat1 = radians(lat)
+        lon1 = radians(lon)
+
+        for b in self.bikemi["stations"]:
+            lat2 = radians(b["coordinates"]["lat"])
+            lon2 = radians(b["coordinates"]["lon"])
+
+            dlon = lon2 - lon1
+            dlat = lat2 - lat1
+
+            a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
+            c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+            distance = R * c
+            if distance < closest:
+                closest = distance
+                closest_station = b
+
+        return closest_station, distance
