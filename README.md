@@ -53,7 +53,7 @@ Lo script quindi indica se la stazione è *probabilmente vuota* o *probabilmente
     import bikemi
     b = bikemi.BikeMi()
     bikes = b.getBikes()
-    closest = b.findClosest()
+    closest = b.findClosest(lat, lon)
     b.save("bikemi.json")
 
 Un esempio più completo di codice è disponibile nello script *(BikeMi-example.py)*.
@@ -116,7 +116,7 @@ This script acknowledges this and tells you if the bike station is *probably ful
     import bikemi
     b = bikemi.BikeMi()
     bikes = b.getBikes()
-    closest = b.findClosest()
+    closest = b.findClosest(lat, lon)
     b.save("bikemi.json")
 
 A more complete example can be found inside the repo *(BikeMi-example.py)*.
