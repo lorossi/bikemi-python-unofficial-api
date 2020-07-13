@@ -1,6 +1,7 @@
 import requests
 import datetime
 import json
+import time
 
 # BikeMi api - scraper for BikeMi website
 class BikeMi:
@@ -65,6 +66,7 @@ class BikeMi:
 
     def getBikes(self):
         self.bikemi = {}
+        start_time = time.time()
         try:
             # try to load the page
             r = requests.get(self.url)
@@ -74,6 +76,7 @@ class BikeMi:
                 # something went wrong...
                 raise
 
+            self.bikemi["elapsed_time"] = 0
             self.bikemi["status"] = r.status_code
         except:
             # cannot load page for some reasongs
@@ -224,13 +227,18 @@ class BikeMi:
             if not "racks" in b:
                 total += bikes_stats[b]
 
-        # add this stat
+        # add total bikes
         self.bikemi["global_stats"]["bikes"]["total_bikes"] = total
 
+        # add total stations stat
         self.bikemi["global_stats"]["stations"] = stations_stats
         self.bikemi["global_stats"]["stations"]["total_stations"] = len(map)
 
+        # add icons stat
         self.bikemi["global_stats"]["icons"] = icons_stats
+
+        # claculate elapsed time (in seconds)
+        self.bikemi["elapsed_time"] = time.time() - start_time
 
         return self.bikemi
 
