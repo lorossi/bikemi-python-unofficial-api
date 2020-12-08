@@ -4,6 +4,7 @@ import json
 import time
 from math import sin, cos, sqrt, atan2, radians
 
+
 # BikeMi api - scraper for BikeMi website
 class BikeMi:
     def __init__(self):
@@ -16,18 +17,19 @@ class BikeMi:
         # delimiters used to identify map position in page source and bikes
         #   info in table
         self.delimiters = {
-            "map" : { # identify map
+            "map": {  # identify map
                     "start":
                     {
-                        "string": '<div id="station-map" style="background-color:Gray;width:100%;height:480px;">',
-                        "skip": 4 # lines to skip (forward)
+                        "string": '<div id="station-map" style="background`'
+                                  '"-color:Gray;width:100%;height:480px;">',
+                        "skip": 4  # lines to skip (forward)
                     },
-                "end": {
+                    "end": {
                         "string": '</script><div id="station-map-search">',
                         "skip": -2
                     }
                 },
-            "table" : { # identify table in map
+            "table": {  # identify table in map
                 "start": {
                     "string": "\\u003ctd\\u003e"
                 },
@@ -36,8 +38,8 @@ class BikeMi:
                 },
                 "elements": [
                     {
-                        "position": 29, # line in map
-                        "name": "bike_racks" # variable name
+                        "position": 29,  # line in map
+                        "name": "bike_racks"  # variable name
                     },
                     {
                         "position": 28,
@@ -64,7 +66,6 @@ class BikeMi:
             }
         }
 
-
     def getBikes(self):
         self.bikemi = {}
         start_time = time.time()
@@ -79,8 +80,9 @@ class BikeMi:
 
             self.bikemi["elapsed_time"] = 0
             self.bikemi["status"] = r.status_code
-        except:
-            # cannot load page for some reasongs
+        except Exception as e:
+            print(f"Cannot load page, error{e}")
+            # cannot load page for some reason
             self.bikemi["status"] = 404
             return self.bikemi
 
@@ -120,18 +122,18 @@ class BikeMi:
 
             m = line.split(",")
             # each of these elements is comma separated
-            icon = m[0].split("'")[1] # url is in quotes
+            icon = m[0].split("'")[1]  # url is in quotes
             icon_url = "https://www.bikemi.com" + icon
             icon_name = icon.split("/")[-1].split("_icon")[0]
             lat = float(m[1])
             lon = float(m[2])
-            name = m[3].replace("'", "").strip() #lots of unnecessary quotes
+            name = m[3].replace("'", "").strip()  # lots of unnecessary quotes
             # now we want to work on the table containing infos about the
             #   station
             table = m[4].split("\\r\\n")
 
             bikes = {}
-            total = 0 # total number of bikes
+            total = 0  # total number of bikes
             start_delim = self.delimiters["table"]["start"]["string"]
             end_delim = self.delimiters["table"]["end"]["string"]
             for element in self.delimiters["table"]["elements"]:
@@ -158,9 +160,10 @@ class BikeMi:
 
             try:
                 # we try to parse to int
-                # this might actually break if they decide to use letters in ids
+                # this might actually break if they decide to use letters
                 id = int(id_container[start:end])
-            except:
+            except Exception as e:
+                print(f"Error in parsing id: {e}")
                 id = id_container[start:end]
 
             # check if the station is full (there are no more free spaces)
@@ -178,7 +181,6 @@ class BikeMi:
             else:
                 probably_full = False
                 probably_empty = False
-
 
             if full:
                 stations_stats["full"] += 1
@@ -204,7 +206,7 @@ class BikeMi:
                     "lat": lat,
                     "lon": lon
                 },
-                "bikes" : bikes,
+                "bikes": bikes,
                 "status": {
                     "full": full,
                     "empty": empty,
@@ -225,7 +227,7 @@ class BikeMi:
 
         # calculate total number of bikes
         for b in bikes_stats:
-            if not "racks" in b:
+            if "racks" not in b:
                 total += bikes_stats[b]
 
         # add total bikes
@@ -243,20 +245,18 @@ class BikeMi:
 
         return self.bikemi
 
-
     # save self.bikemi to file
     def saveToFile(self, path="BikeMi.json", indent=4):
         with open(path, 'w') as json_file:
             json.dump(self.bikemi, json_file, indent=indent)
 
-
-    # find closest station to user specified coordinates
+    #  find closest station to user specified coordinates
     def findClosest(self, lat, lon):
         if not self.bikemi["stations"]:
             return None
 
-        R = 6373.0 # earth radius
-        closest = R # max distance (hopefully)
+        R = 6373.0  # earth radius
+        closest = R  # max distance (hopefully)
         closest_station = {}
         lat1 = radians(lat)
         lon1 = radians(lon)
