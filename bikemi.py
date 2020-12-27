@@ -8,6 +8,7 @@ from math import sin, cos, sqrt, atan2, radians
 # BikeMi api - scraper for BikeMi website
 class BikeMi:
     def __init__(self):
+        # bikes container dict
         self.bikemi = {}
         # BikeMi map url
         self.url = "https://www.bikemi.com/it/mappa-stazioni.aspx"
@@ -20,8 +21,8 @@ class BikeMi:
             "map": {  # identify map
                     "start":
                     {
-                        "string": '<div id="station-map" style="background`'
-                                  '"-color:Gray;width:100%;height:480px;">',
+                        "string": '<div id="station-map" style="background-'
+                                  'color:Gray;width:100%;height:480px;">',
                         "skip": 4  # lines to skip (forward)
                     },
                     "end": {
@@ -136,6 +137,7 @@ class BikeMi:
             total = 0  # total number of bikes
             start_delim = self.delimiters["table"]["start"]["string"]
             end_delim = self.delimiters["table"]["end"]["string"]
+
             for element in self.delimiters["table"]["elements"]:
                 start = table[element["position"]].find(start_delim)
                 start += len(self.delimiters["table"]["start"]["string"])
@@ -176,7 +178,9 @@ class BikeMi:
                 #   their system doesn't take track of broken bikes
                 #   so we want to show if, according to my calculations,
                 #   the bike rack moght be full or empty
-                probably_full = (bikes_stats["bike_racks"] <= self.probability_threshold)
+                probably_full = (bikes_stats["bike_racks"] <=
+                                 self.probability_threshold)
+
                 probably_empty = (total <= self.probability_threshold)
             else:
                 probably_full = False
@@ -255,7 +259,7 @@ class BikeMi:
         if not self.bikemi["stations"]:
             return None
 
-        R = 6373.0  # earth radius
+        R = 6373  # earth radius
         closest = R  # max distance (hopefully)
         closest_station = {}
         lat1 = radians(lat)
@@ -268,7 +272,7 @@ class BikeMi:
             dlon = lon2 - lon1
             dlat = lat2 - lat1
 
-            a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
+            a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
             c = 2 * atan2(sqrt(a), sqrt(1 - a))
 
             distance = R * c
