@@ -7,7 +7,22 @@ from math import sin, cos, sqrt, atan2, radians
 
 # BikeMi api - scraper for BikeMi website
 class BikeMi:
-    def __init__(self):
+    def __init__(self, proxy_username=None, proxy_password=None,
+                 proxy_address=None, proxy_port=None):
+        # proxy data
+        if proxy_address:
+            if proxy_username:
+                self.proxy = {
+                    "http": f"http://{proxy_username}:{proxy_password}@"
+                            f"{proxy_address}:{proxy_port}/",
+                }
+            else:
+                self.proxy = {
+                    "http": f"http://{proxy_address}:{proxy_port}/",
+                }
+        else:
+            self.proxy = None
+
         # bikes container dict
         self.bikemi = {}
         # BikeMi map url
@@ -72,7 +87,8 @@ class BikeMi:
         start_time = time.time()
         try:
             # try to load the page
-            r = requests.get(self.url)
+            r = requests.get(self.url, proxies=self.proxy)
+
             self.bikemi["timestamp"] = datetime.datetime.now().isoformat()
 
             if r.status_code != 200:
