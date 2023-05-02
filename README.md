@@ -1,126 +1,118 @@
-# BikeMi-Python-Unofficial-API
+# Bikemi Unofficial API
 
-## Italian [(English below)](#english)
-Scraper per la mappa del [BikeMi](https://www.bikemi.com/it/mappa-stazioni.aspx) fatta in Python3.
+I sincerely hope ATM won't ban my IP for this.
 
-Il modulo *bikemi.py* estrae:
-1. Statistiche globali sul servizio:
-  1. Statistiche sulle bici:
-     1. Stalli liberi
-     2. Bici disponibili
-     3. Bici elettriche disponibili
-     4. Bici elettriche con seggiolino disponibili
-     5. Numero totale di bici disponibili
-  2. Statistiche sulle stazioni:
-      1. Stazioni piene
-      2. Stazioni vuote
-      3. Stazioni *probabilmente* piene
-      4. Stazioni *probabilmente* piene
-      5. Numero totale di stazioni
-  3. Statistiche sulle icone usate:
-      1. Nome dell'icona
-      2. Numero di volte che è stata usata
-      3. URL dell'icona
-2. Statistiche per ogni stazione:
-    1. Nome della stazione
-    2. ID della stazione
-    3. Coordinate della stazione
-    4. Numero di bici nella stazione, a sua volta diviso in:
-        1. Stalli liberi
-        2. Bici disponibili
-        3. Bici elettriche disponibili
-        4. Bici elettriche con seggiolino disponibili
-  5. Lo status della stazione:
-      1. Se la stazione è piena
-      2. Se la stazione è vuota
-      3. Se la stazione *potrebbe* essere piena
-      4. Se la stazione *potrebbe* può essere vuota
-  6. Il nome dell'icona che il sito mostra sulla mappa e il suo URL
+## Description
 
-I dati vengono restituiti tramite dizionario e possono essere salvati su file in formato JSON.
+This module extracts the data for every station from the [Bikemi](http://www.bikemi.com) website.
 
-Nella repo viene anche fornito uno script *(BikeMi-example.py)* che mostra un uso di esempio.
+By instantiating the `Bikemi` class and calling the `scrape` method, the module will download the data from the website and parse it.
+If the method is not explicitly called, the data will be downloaded and parsed only while accessing the attributes of the `Bikemi` class.
+The data can then be retrieved as a list of instances of the `Station` class, containing more details (some encapsulated in other classes) about the station.
+Global statistics about the whole network are also returned.
 
-### Stazione probabilmente piena / vuota
-Ho scoperto, per esperienza diretta, che le biciclette rotte o per qualche motivo non disponibili non sono conteggiate dal sistema. Per questo, anche se la stazione mostra bici o stalli disponibili, ciò potrebbe non rispecchiare la realtà.
-Lo script quindi indica se la stazione è *probabilmente vuota* o *probabilmente piena*. Il conteggio è arbitrario ed è basato sulla mia esperienza di utente BikeMi.
+Available attributes:
 
-### Link ufficiali
-[Sito BikeMi](https://www.bikemi.com/)  
-[Mappa BikeMi](https://www.bikemi.com/it/mappa-stazioni.aspx)
+- `last_scrape`: `int` containing the timestamp of the last time the data was downloaded and parsed
+- `raw_data`: `dict` containing the raw data downloaded from the website
+- `stations`: `list[Station]`, containing the data for every station
+- `global_stats`: `GlobalStats` containing global statistics about the whole network
 
-### Codice di esempio
-    import bikemi
-    b = bikemi.BikeMi()
-    bikes = b.getBikes()
-    closest = b.findClosest(lat=45.4638688, lon=9.1913493)
-    b.saveToFile("bikemi.json")
+All classes can be serialized and deserialized from and to the following formats:
 
-Un esempio più completo di codice è disponibile nello script *(BikeMi-example.py)*.
+- `json`
+- `yaml`
+- `toml`
 
-### Licenza
-Questo progetto è distribuito sotto licenza *Attribuzione 4.0 Internazionale (CC BY 4.0)*
-Il progetto è completamente indipendente da BikeMi.
+All classes are implemented using my ![customdataclass](https://github.com/lorossi/customdataclass) module, which is a better (I believe) version of the `dataclass` module from the standard library.
+Check the documentation for more details.
 
-## English
-Scraper for [BikeMi](https://www.bikemi.com/it/mappa-stazioni.aspx) map. Made in Python3.
+### Structure of the data
 
-*bikemi.py* module extracts:
-1. Global statistics on the service
-  1. Bikes statistics:
-      1. Free racks
-      2. Available bikes
-      3. Available electric bikes
-      4. Available electric bikes with child seat
-      5. Total number of available bikes
-  2. Stations statistics:
-      1. Empty stations
-      2. Full stations
-      3. Stations that *might* be empty
-      4. Stations that *might* be full
-      5. Total number of stations
-  3. Icons statistics:
-      1. Icon name
-      2. Number of time it has been used
-      3. Icon URL
-2. Data for each station
-    1. Station name
-    2. Station ID
-    3. Station coordinates
-    4. Number of bikes available, divided in
-        1. Free racks
-        2. Available bikes
-        3. Available electric bikes
-        4. Available electric bikes with child seat
-  5. Station status:
-      1. If the station is empty
-      2. If the station is full
-      3. If the station *might* be empty
-      4. If the station *might* be full
-  6. Name and URL of the icon used on the map
+#### Global Data
 
-All the data is provided in a dict and can be saved into a JSON file.
+Global data is contained in the `GlobalStats` class, which contains the following attributes:
 
-Inside this repo you will find a file called *(BikeMi-example.py)* that shows a use case.
+- `timestamp`: `float` containing the timestamp of the last time the data was downloaded and parsed
+- `available_vehicles`: `int` containing the total number of available vehicles in the whole network
+- `available_docks`: `int` containing the total number of available docking stations in the whole network
+- `available_dock_categories`: `list[AvailableDockCategory]` containing the number of available docking stations for each category
+- `available_vehicles_categories`: `list[AvailableVehicleCategory]` containing the number of available vehicles for each category
+- `full_stations_count`: `int` containing the number of stations that are full
+- `empty_stations_count`: `int` containing the number of stations that are empty
+- `total_stations_count`: `int` containing the total number of stations in the whole network
 
-### Probably empty/full station
-By experience, I discovered that broken bycicles are not counted by the system. Because of this, even if the station shows free racks or available bikes, it might not be true.
-This script acknowledges this and tells you if the bike station is *probably full* or *probably empty*. This stat is purerly arbitrary and it is based on my experience as a BikeMi user.
+#### Station
 
-### Official links
-[Bikemi website](https://www.bikemi.com/en/homepage.aspx)  
-[BikeMi map](https://www.bikemi.com/en/stations-map.aspx)
+Station data is contained in the `Station` class, which contains the following attributes:
 
+- `id`: `int` containing the ID of the station
+- `name`: `str` containing the name of the station
+- `title`: `str` containing the title of the station
+- `clean_title`: `str` containing the cleaned title of the station
+- `state`: `str` containing the state of the station
+- `sub_title`: `str` containing the subtitle of the station
+- `enabled`: `bool` containing whether the station is enabled or not
+- `availability_info`: `AvailabilityInfo` containing the availability information for the station
+- `coord`: `Coord` containing the coordinates of the station
 
-### Code example
-    import bikemi
-    b = bikemi.BikeMi()
-    bikes = b.getBikes()
-    closest = b.findClosest(lat=45.4638688, lon=9.1913493)
-    b.saveToFile("bikemi.json")
+#### AvailabilityInfo
 
-A more complete example can be found inside the repo *(BikeMi-example.py)*.
+Availability information is contained in the `AvailabilityInfo` class, which contains the following attributes:
 
-### License
-This project is distributed under *Attribution 4.0 International (CC BY 4.0)* license.
-I do not claim any association with BikeMi.
+- `available_vehicles`: `int` containing the number of available vehicles
+- `available_docks`: `int` containing the number of available docking stations
+- `available_dock_categories`: `list[AvailableDockCategory]` containing the number of available docking stations for each category
+- `available_vehicle_categories`: `list[AvailableVehicleCategory]` containing the number of available vehicles for each category
+
+#### AvailableDockCategory
+
+Available docking stations for a category is contained in the `AvailableDockCategory` class, which contains the following attributes:
+
+- `category`: `str` containing the category of the docking station
+- `count`: `int` containing the number of available docking stations for the category
+
+#### AvailableVehicleCategory
+
+Available vehicles for a category is contained in the `AvailableVehicleCategory` class, which contains the following attributes:
+
+- `category`: `str` containing the category of the vehicle
+- `count`: `int` containing the number of available vehicles for the category
+
+#### Coord
+
+Coordinates are contained in the `Coord` class, which contains the following attributes:
+
+- `lat`: `float` containing the latitude of the station
+- `lon`: `float` containing the longitude of the station
+
+## Code example
+
+```python
+from bikemi import Bikemi
+
+def main():
+    bikemi = Bikemi()
+    if not bikemi.scrape():
+        print("Error while scraping data")
+        return
+
+    for station in bikemi.stations:
+      print(station)
+
+    print(global_stats)
+```
+
+## Requirements
+
+The module requires the packages listed in `requirements.txt` to be installed.
+
+### Installation
+
+```bash
+pip install -r requirements.txt
+```
+
+## License
+
+This module is released under the MIT license. See [LICENSE](LICENSE.md) for more details.
