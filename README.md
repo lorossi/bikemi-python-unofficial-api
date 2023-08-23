@@ -1,6 +1,6 @@
 # Bikemi Unofficial API
 
-I sincerely hope ATM won't ban my IP for this.
+*I sincerely hope ATM won't ban my IP for this.*
 
 ## Description
 
